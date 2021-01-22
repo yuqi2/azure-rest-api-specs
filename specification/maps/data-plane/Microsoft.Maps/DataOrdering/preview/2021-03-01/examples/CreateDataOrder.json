@@ -1,0 +1,200 @@
+{
+  "parameters": {
+    "api-version": "2021-03-01-preview.0",
+    "subscription-key": "[subscription-key]",
+    "catalogId": "imagery",
+    "orderId": "order1",
+    "createDataOrderRequestBody": {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "geometry": {
+            "coordinates": [
+              [
+                [
+                    -122.2787330626079,
+                    47.95267095266939
+                ],
+                [
+                    -122.2796965774825,
+                    47.59784152255815
+                ],
+                [
+                    -121.9601324156306,
+                    47.58040923091588
+                ],
+                [
+                    -121.9613395002858,
+                    47.93999050080746
+                ],
+                [
+                    -122.2787330626079,
+                    47.95267095266939
+                ]
+              ]
+            ],
+            "type": "Polygon"
+          },
+          "properties": {
+            "id": "2f0c1468-fe8c-475d-9009-233b6d05ff2fs"
+          },
+          "type": "Feature"
+        }
+      ]
+    }  
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "geometry": {
+              "coordinates": [
+                [
+                  [
+                    -122.2787330626079,
+                    47.95267095266939
+                  ],
+                  [
+                    -122.2796965774825,
+                    47.59784152255815
+                  ],
+                  [
+                    -121.9601324156306,
+                    47.58040923091588
+                  ],
+                  [
+                    -121.9613395002858,
+                    47.93999050080746
+                  ],
+                  [
+                    -122.2787330626079,
+                    47.95267095266939
+                  ]
+                ]
+              ],
+              "type": "Polygon"
+            },
+            "properties": {
+              "id": "2f0c1468-fe8c-475d-9009-233b6d05ff2fs",
+              "price": 30
+            },
+            "type": "Feature"
+          }
+        ],
+        "id": "order1",
+        "CreationTimestamp": "2021-01-10T21:42:18.917782411Z",
+        "LastModifiedTimestamp": "2021-01-10T21:42:18.917782411Z",
+        "ExpirationTimestamp": "2021-01-11T21:42:18.917782411Z",
+        "status": "NotStarted",
+        "statusDetails": "The order is created and not placed yet.",
+        "price": 30
+      }
+    },
+    "201": {
+      "body": {
+        "body": {
+          "type": "FeatureCollection",
+          "features": [
+            {
+              "geometry": {
+                "coordinates": [
+                  [
+                    [
+                      -122.2787330626079,
+                      47.95267095266939
+                    ],
+                    [
+                      -122.2796965774825,
+                      47.59784152255815
+                    ],
+                    [
+                      -121.9601324156306,
+                      47.58040923091588
+                    ],
+                    [
+                      -121.9613395002858,
+                      47.93999050080746
+                    ],
+                    [
+                      -122.2787330626079,
+                      47.95267095266939
+                    ]
+                  ]
+                ],
+                "type": "Polygon"
+              },
+              "properties": {
+                "id": "2f0c1468-fe8c-475d-9009-233b6d05ff2fs",
+                "price": 30
+              },
+              "type": "Feature"
+            }
+          ],
+          "id": "order1",
+          "CreationTimestamp": "2021-01-10T21:42:18.917782411Z",
+          "LastModifiedTimestamp": "2021-01-10T21:42:18.917782411Z",
+          "ExpirationTimestamp": "2021-01-11T21:42:18.917782411Z",
+          "status": "NotStarted",
+          "statusDetails": "The order is created and not placed yet.",
+          "price": 30
+        }
+      }
+    },
+    "400": {
+      "headers": {},
+      "body": {
+        "error": {
+          "code": "400 BadRequest",
+          "message": "Bad request: one or more parameters were incorrectly specified or are mutually exclusive."
+        }
+      }
+    },
+    "401": {
+      "headers": {},
+      "body": {
+        "error": {
+          "code": "401 Unauthorized",
+          "message": "Access denied due to invalid subscription key. Make sure to provide a valid key for an active subscription."
+        }
+      }
+    },
+    "403": {
+      "headers": {},
+      "body": {
+        "error": {
+          "code": "403 Forbidden",
+          "message": "Permission, capacity, or authentication issues."
+        }
+      }
+    },
+    "404": {
+      "headers": {},
+      "body": {
+        "error": {
+          "code": "404 NotFound",
+          "message": "Not Found: the requested resource could not be found, but it may be available again in the future."
+        }
+      }
+    },
+    "405": {
+      "headers": {},
+      "body": {
+        "error": {
+          "code": "405 MethodNotAllowed",
+          "message": "Method Not Allowed: The order exists with that Id is already placed and can't be replaced."
+        }
+      }
+    },
+    "500": {
+      "headers": {},
+      "body": {
+        "error": {
+          "code": "500 InternalServerError",
+          "message": "An error occurred while processing the request. Please try again later."
+        }
+      }
+    }
+  }
+}

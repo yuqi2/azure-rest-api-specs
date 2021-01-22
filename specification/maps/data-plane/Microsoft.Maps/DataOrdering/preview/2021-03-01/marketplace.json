@@ -1,0 +1,926 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Azure Maps Data Ordering Service",
+    "version": "2020-03-01-preview.1",
+    "description": "Azure Maps Data Ordering REST APIs"
+  },
+  "host": "atlas.microsoft.com",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "azure_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
+      "flow": "implicit",
+      "description": "These are the [Azure Active Directory OAuth2](https://docs.microsoft.com/en-us/azure/active-directory/develop/v1-overview)  Flows. When paired with [Azure Role Based Access](https://docs.microsoft.com/en-us/azure/role-based-access-control/overview)  control it can be used to control access to Azure Maps REST APIs. Azure Role based access controls are used to designate access to one or more Azure Maps resource account or sub-resources. Any user, group, or service principal can be granted access via a  built in role or a custom role composed of one or more permissions to Azure Maps REST APIs.\n\nTo implement scenarios we recommend viewing [authentication concepts](https://aka.ms/amauth). In summary, this security definition provides a solution  for modeling application(s) via objects capable of access control on specific APIs and scopes.\n\n#### Note\n* This security definition **requires** the use of the `x-ms-client-id` header to indicate which Azure Maps resource the application is requesting access to.  This can be acquired from the [Maps management API](https://aka.ms/amauthdetails).\n* The `Authorization URL` is specific to the Azure public cloud instance. Sovereign clouds have unique Authorization URLs and Azure Active directory configurations. \n* The Azure role based access control is configured from the [Azure management plane](https://aka.ms/amrbac) via Azure portal, Powershell, CLI, Azure SDKs, or REST APIs.\n* Usage of the [Azure Maps Web SDK](https://aka.ms/amaadmc) allows for configuration based setup of an application for multiple use cases.\n* Currently Azure Active Directory [v1.0](https://docs.microsoft.com/en-us/azure/active-directory/develop/azure-ad-endpoint-comparison) tokens are supported.",
+      "scopes": {
+        "user_impersonation": "Impersonates a user's Azure Active Directory account."
+      }
+    },
+    "apiKeyQuery": {
+      "type": "apiKey",
+      "description": "This is a shared key which is provisioned when creating an [Azure Maps resource](https://aka.ms/amauth) through the Azure management plane  via Azure portal, Powershell, CLI, Azure SDKs, or REST APIs. With this key, any application is authorized to access  all REST APIs. In other words, these can currently be treated as master keys to the account which they are issued for.  For publicly exposed applications our recommendation is to use server to server access of Azure Maps REST APIs where this key can be  securely stored.",
+      "name": "subscription-key",
+      "in": "query"
+    }
+  },
+  "security": [
+    {
+      "azure_auth": []
+    },
+    {
+      "apiKeyQuery": []
+    }
+  ],
+  "responses": {
+    "202": {
+      "description": "Request Accepted: The request has been accepted for processing. Please use the URL in the Location Header to retry or access the results.",
+      "headers": {
+        "Location": {
+          "type": "string",
+          "description": "New URL to check for the results of the long running process."
+        }
+      }
+    },
+    "400": {
+      "description": "Bad request: one or more parameters were incorrectly specified or are mutually exclusive.",
+      "schema": {
+        "$ref": "#/definitions/ODataErrorResponse"
+      }
+    },
+    "401": {
+      "description": "Access denied due to invalid subscription key or invalid Azure Active Directory bearer token.  Make sure to provide a valid key for an active Azure subscription and Maps resource.  Otherwise, verify the [WWW-Authenticate](https://tools.ietf.org/html/rfc6750#section-3.1) header for error code and description of the provided AAD bearer token.",
+      "schema": {
+        "$ref": "#/definitions/ODataErrorResponse"
+      },
+      "headers": {
+        "WWW-Authenticate": {
+          "type": "string",
+          "description": "Bearer realm=\"https://atlas.microsoft.com/\", error=\"invalid_token\", error_description=\"The access token expired\""
+        }
+      }
+    },
+    "403": {
+      "description": "Permission, capacity, or authentication issues.",
+      "schema": {
+        "$ref": "#/definitions/ODataErrorResponse"
+      }
+    },
+    "404": {
+      "description": "Not Found: the requested resource could not be found, but it may be available again in the future.",
+      "schema": {
+        "$ref": "#/definitions/ODataErrorResponse"
+      }
+    },
+    "405": {
+      "description": "Method Not Allowed: the requested method is currently not allowed, but may be permissable again in the future.",
+      "schema": {
+        "$ref": "#/definitions/ODataErrorResponse"
+      }
+    },
+    "409": {
+      "description": "The request could not be completed due to a conflict with the current state of the resource. Likely caused by a parallel update to the same resource.",
+      "schema": {
+        "$ref": "#/definitions/ODataErrorResponse"
+      }
+    },
+    "422": {
+      "description": "Unprocessable Entity: one or more invalid parameters.",
+      "schema": {
+        "$ref": "#/definitions/ODataErrorResponse"
+      }
+    },
+    "500": {
+      "description": "An error occurred while processing the request. Please try again later.",
+      "schema": {
+        "$ref": "#/definitions/ODataErrorResponse"
+      }
+    }
+  },
+  "parameters": {
+    "SubscriptionKey": {
+      "name": "subscription-key",
+      "description": "One of the Azure Maps keys provided from an Azure Map Account. Please refer to this [article](https://docs.microsoft.com/azure/azure-maps/how-to-manage-authentication) for details on how to manage authentication.",
+      "type": "string",
+      "in": "query",
+      "required": false,
+      "x-ms-parameter-location": "client"
+    },
+    "ApiVersion": {
+      "name": "api-version",
+      "description": "Version number of Azure Maps API. Current version is 2021-03-01-preview.1",
+      "type": "string",
+      "in": "query",
+      "required": true,
+      "default": "2021-03-01-preview.1",
+      "x-ms-parameter-location": "client"
+    },
+    "CatalogId": {
+      "name": "catalogId",
+      "description": "The catalog id used to identify a data catalog.",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "x-ms-parameter-location": "method"
+    },
+    "OrderId": {
+      "name": "orderId",
+      "description": "The client-provided order id used to identify a data order.",
+      "type": "string",
+      "in": "path",
+      "required": true,
+      "x-ms-parameter-location": "method"
+    }
+  },
+  "paths": {
+    "/data-ordering/catalogs/{catalogId}": {
+      "get": {
+        "description": "**Data Ordering - Search Marketplace Data API PREVIEW**\n\nThis GET API allows the user to express complex searches by filtering different parameters and specifying geographic criteria.",
+        "operationId": "DataOrdering_SearchMarketplaceData",
+        "x-ms-examples": {
+          "Search marketplace data": {
+            "$ref": "./examples/SearchMarketplaceData.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionKey"
+          },
+          {
+            "$ref": "#/parameters/ApiVersion"
+          },
+          {
+            "$ref": "#/parameters/CatalogId"
+          },
+          {
+            "name": "itemsPerPage",
+            "in": "query",
+            "description": "The number of search results returned per page. The number should be between 1 to 500 inclusively.",
+            "type": "integer",
+            "default": 50,
+            "required": false
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "The requested page number.",
+            "type": "integer",
+            "default": 1,
+            "required": false
+          },
+          {
+            "name": "cloudCover",
+            "in": "query",
+            "description": "The cloud cover percentage or the cloud cover percentage range. The value should between 0 to 100. Ranges are expressed as follow: Comma to separate start value from end value, Start value or end value can be omitted (it means values are infinite), Start with [ means start value is included, Start with ] means start value is excluded, End with [ means end value is included, End with ] means end value is excluded.",
+            "type": "string",
+            "example": "[0,100]",
+            "required": false
+          },
+          {
+            "name": "snowCover",
+            "in": "query",
+            "description": "The snow cover percentage or the snow cover percentage range. The value should between 0 to 100. Ranges are expressed as follow: Comma to separate start value from end value, Start value or end value can be omitted (it means values are infinite), Start with [ means start value is included, Start with ] means start value is excluded, End with [ means end value is included, End with ] means end value is excluded.",
+            "type": "string",
+            "example": "[0,100]",
+            "required": false
+          },
+          {
+            "name": "incidenceAngle",
+            "in": "query",
+            "description": "The incident angle or the incident angle range in degree. The value should between 0 to 90. Ranges are expressed as follow: Comma to separate start value from end value, Start value or end value can be omitted (it means values are infinite), Start with [ means start value is included, Start with ] means start value is excluded, End with [ means end value is included, End with ] means end value is excluded.",
+            "type": "string",
+            "example": "[0,90]",
+            "required": false
+          },
+          {
+            "name": "acquisitionDate",
+            "in": "query",
+            "description": "The acquisition date or the acquisition date range. Ranges are expressed as follow: Comma to separate start value from end value, Start value or end value can be omitted (it means values are infinite), Start with [ means start value is included, Start with ] means start value is excluded, End with [ means end value is included, End with ] means end value is excluded.",
+            "type": "string",
+            "format": "date-time",
+            "example": "2018-02-28T11:00:29.027Z",
+            "required": false
+          },
+          {
+            "name": "bbox",
+            "in": "query",
+            "description": "The search API returns all products that intersect with the rectangular area of a bounding box. The value of the bbox parameter must be an array of length 4, with EPSG:4326 longitude and latitude of the southwest corner followed by EPSG:4326 longitude and latitude of the northeast corner. The string is presented in the following format: SouthwestCorner_Longitude, SouthwestCorner_Latitude, NortheastCorner_Longitude,  NortheastCorner_Latitude.",
+            "required": true,
+            "type": "array",
+            "collectionFormat": "csv",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortBy",
+            "in": "query",
+            "description": "The order strategy for the items. Accepted values are all search filter names separated by a comma. Minus sign can be used to sort descending on the attribute. Otherwise the sort is ascending.",
+            "type": "array",
+            "collectionFormat": "csv",
+            "items": {
+              "type": "string"
+            },
+            "default": "-acquisitionDate,cloudCover",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully. The response contains information about the marketplace data.",
+            "schema": {
+              "$ref": "#/definitions/GetMarketplaceDataResponse"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "401": {
+            "$ref": "#/responses/401"
+          },
+          "403": {
+            "$ref": "#/responses/403"
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/data-ordering/catalogs/{catalogId}/orders/{orderId}": {
+      "put": {
+        "description": "**Data Ordering - Create Or replace Data Order API PREVIEW**\n\nThis PUT API allows the user to create or replace a data order. If the order identified by orderId doesn't exist, a new order will be created. If the order identified by orderId exists, order will be replaced by new order in PUT request body. The response will include pricing information for the order. Creating order doesn't place the order.",
+        "operationId": "DataOrdering_CreateDataOrder",
+        "x-ms-examples": {
+          "Create or edit a data order": {
+            "$ref": "./examples/CreateDataOrder.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionKey"
+          },
+          {
+            "$ref": "#/parameters/ApiVersion"
+          },
+          {
+            "$ref": "#/parameters/CatalogId"
+          },
+          {
+            "$ref": "#/parameters/OrderId"
+          },
+          {
+            "name": "createDataOrderRequestBody",
+            "in": "body",
+            "description": "The request body to provide to create or replace a data order.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateDataOrderRequestBody"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Order already exists and is replaced by order in the reqeust body. The response contains information about the new order.",
+            "schema": {
+              "$ref": "#/definitions/CreateDataOrderResponse"
+            }
+          },
+          "201": {
+            "description": "Order Created.",
+            "schema": {
+              "$ref": "#/definitions/CreateDataOrderResponse"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "401": {
+            "$ref": "#/responses/401"
+          },
+          "403": {
+            "$ref": "#/responses/403"
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "405": {
+            "description": "Method Not Allowed: The order exists with that Id is already placed and can't be replaced.",
+            "schema": {
+              "$ref": "#/definitions/ODataErrorResponse"
+            }
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      },
+      "get": {
+        "description": "**Data Ordering - Get Data Order API PREVIEW**\n\nThis API allows the caller to get a data order information.",
+        "operationId": "DataOrdering_GetDataOrder",
+        "x-ms-examples": {
+          "Get a data order": {
+            "$ref": "./examples/GetDataOrder.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionKey"
+          },
+          {
+            "$ref": "#/parameters/ApiVersion"
+          },
+          {
+            "$ref": "#/parameters/CatalogId"
+          },
+          {
+            "$ref": "#/parameters/OrderId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully. The response body contains the data order associated to the OrderId.",
+            "schema": {
+              "$ref": "#/definitions/GetDataOrderResponse"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "401": {
+            "$ref": "#/responses/401"
+          },
+          "403": {
+            "$ref": "#/responses/403"
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/data-ordering/catalogs/{catalogId}/orders/{orderId}/:place" : {
+      "post": {
+        "description": "**Data Ordering - Place Data Order API PREVIEW**\n\nThis POST API allows the user to place a data order. If the order identified by orderId doesn't exist, a new order will be created. If the order identified by orderId exists, order will be replaced by new order indicated in PUT request body. The response will include pricing information for the order. Creating order doesn't place the order.",
+        "operationId": "DataOrdering_PlaceDataOrder",
+        "x-ms-examples": {
+          "Create or replace a data order": {
+            "$ref": "./examples/PlaceDataOrder.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionKey"
+          },
+          {
+            "$ref": "#/parameters/ApiVersion"
+          },
+          {
+            "$ref": "#/parameters/CatalogId"
+          },
+          {
+            "$ref": "#/parameters/OrderId"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Data Order placed. The response contains information about the created order includes ordering pricing.",
+            "schema": {
+              "$ref": "#/definitions/PlaceDataOrderResponse"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "401": {
+            "$ref": "#/responses/401"
+          },
+          "403": {
+            "$ref": "#/responses/403"
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "405": {
+            "description": "Method Not Allowed: The order exists with that Id is already in terminated state.",
+            "schema": {
+              "$ref": "#/definitions/ODataErrorResponse"
+            }
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/data-ordering/catalogs/{catalogId}/orders": {
+      "get": {
+        "description": "**Data Ordering - Get Data Orders API PREVIEW**\n\nThis API allows the caller to fetch a list of existing data orders under certain data catalog.",
+        "operationId": "DataOrdering_ListDataOrders",
+        "x-ms-examples": {
+          "List existing data orders": {
+            "$ref": "./examples/ListDataOrders.json"
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/parameters/SubscriptionKey"
+          },
+          {
+            "$ref": "#/parameters/ApiVersion"
+          },
+          {
+            "$ref": "#/parameters/CatalogId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The request completed successfully. The response body contains a list of existing data orders under certain data catalog.",
+            "schema": {
+              "$ref": "#/definitions/ListDataOrdersResponse"
+            }
+          },
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "401": {
+            "$ref": "#/responses/401"
+          },
+          "403": {
+            "$ref": "#/responses/403"
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ODataErrorResponse": {
+      "type": "object",
+      "description": "This response object is returned when an error occurs in the Maps API.",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/ODataError"
+        }
+      }
+    },
+    "ODataError": {
+      "type": "object",
+      "description": "This object is returned when an error occurs in the Maps API.",
+      "properties": {
+        "code": {
+          "type": "string",
+          "readOnly": true,
+          "description": "The ODataError code."
+        },
+        "message": {
+          "type": "string",
+          "readOnly": true,
+          "description": "If available, a human readable description of the error."
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ODataError"
+          }
+        },
+        "target": {
+          "type": "string",
+          "readOnly": true,
+          "description": "If available, the target causing the error."
+        }
+      }
+    },
+    "PageLink": {
+      "description": "Links to a marketplace data page.",
+      "type": "object",
+      "required": [
+        "href",
+        "rel"
+      ],
+      "properties": {
+        "href": {
+          "type": "string"
+        },
+        "rel": {
+          "type": "string",
+          "enum": [
+            "self",
+            "prev",
+            "next"
+          ]
+        }
+      }
+    },
+    "GetMarketplaceDataResponse": {
+      "description": "The Get Marketplace Data response object in GeoJSON FeatureCollection format.",
+      "type": "object",
+      "required": [
+        "type",
+        "features"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GetMarketplaceDataResponseGeoJSONFeature"
+          }
+        },
+        "totalResults": {
+          "description": "The total number of the data items of the search.",
+          "type": "string",
+          "readOnly": true
+        },
+        "page": {
+          "description": "The current page index.",
+          "type": "integer",
+          "readOnly": true
+        },
+        "itemsPerPage": {
+          "type": "integer",
+          "readOnly": true,
+          "description": "The number of search results returned per page."
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/PageLink"
+          }
+        }
+      }
+    },
+    "GetMarketplaceDataResponseGeoJSONFeature": {
+      "description": "The marketplace product data in GeoJSON Feature format.",
+      "type": "object",
+      "required": [
+        "type",
+        "geometry",
+        "properties"
+      ],
+      "properties":{
+        "properties": {
+          "description": "The properties of the GeoJSON Feature.",
+          "type": "object",
+          "properties":{
+            "acquisitionDate": {
+              "description": "The acquisition date of the product data.",
+              "type": "string",
+              "format": "date-time",
+              "readOnly": true
+            },
+            "cloudCover": {
+              "description": "The cloud cover value of the product data.",
+              "type": "number",
+              "readOnly": true
+            },
+            "expirationDate": {
+              "description": "Date of the deletion of the product data.",
+              "type": "string",
+              "format": "date-time",
+              "readOnly": true
+            },
+            "format": {
+              "description": "The format of the product data.",
+              "type": "string",
+              "readOnly": true,
+              "enum": [
+                "image/jp2"
+              ]
+            },
+            "productType": {
+              "description": "The product type of the product data.",
+              "type": "string",
+              "readOnly": true,
+              "enum": [
+                "bundle"
+              ]
+            },
+            "id": {
+              "description": "The id used to identify the product data.",
+              "type": "string",
+              "readOnly": true
+            },
+            "incidenceAngle":{
+              "description": "The incident angle value in degree of the product data.",
+              "type": "number",
+              "readOnly": true
+            },
+            "snowCover": {
+              "description": "The snow cover percentage of the product data.",
+              "type": "number",
+              "readOnly": true
+            },
+            "resolution": {
+              "description": "The resolution in meters.",
+              "type": "number",
+              "readOnly": true
+            },
+            "lastUpdateDate": {
+              "description": "The last update date of the product data.",
+              "type": "string",
+              "format": "date-time",
+              "readOnly": true
+            }
+          }
+        }
+      },    
+      "allOf": [
+        {
+          "$ref": "#/definitions/GeoJSONFeatureBase"
+        }
+      ]
+    },
+    "GeoJSONFeatureBase": {
+      "description": "GeoJSON Feature",
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "feature",
+          "type": "string"
+        },
+        "geometry": {
+          "$ref": "#/definitions/GeoJSONGeometry"
+        }
+      }
+    },
+    "CreateDataOrderRequestBody": {
+      "description": "The Create Data Order request body in GeoJSON FeatureCollection format.",
+      "type": "object",
+      "required": [
+        "type",
+        "features"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CreateDataOrderRequestGeoJSONFeature"
+          }
+        }
+      }
+    },
+    "CreateDataOrderRequestGeoJSONFeature": {
+      "description": "The order data in GeoJSON Feature format.",
+      "type": "object",
+      "required": [
+        "type",
+        "geometry",
+        "properties"
+      ],
+      "properties":{
+        "properties": {
+          "description": "The properties of the GeoJSON Feature.",
+          "type": "object",
+          "properties":{
+            "id": {
+              "description": "The id used to identify the product data.",
+              "type": "string",
+              "readOnly": true
+            }
+          }
+        }
+      },    
+      "allOf": [
+        {
+          "$ref": "#/definitions/GeoJSONFeatureBase"
+        }
+      ]
+    },
+    "CreateDataOrderResponse": {
+      "description": "The Create Data Order response in GeoJSON FeatureCollection format.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/DataOrderResponse"
+        }
+      ]
+    },
+    "DataOrderResponse" : {
+      "description": "Data order response.",
+      "type": "object",
+      "required": [
+        "type",
+        "features"
+      ],
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DataOrderResponseGeoJSONFeature"
+          }
+        },
+        "id": {
+          "description": "The client provided id to identify the order.",
+          "type": "string"
+        },
+        "CreationTimestamp": {
+          "description": "The timestamp of the order is created.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "LastModifiedTimestamp": {
+          "description": "The timestamp of the order is last modified.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "ExpirationTimestamp": {
+          "description": "The timestamp of the order is expired.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "SubmitTimestamp": {
+          "description": "The timestamp of the order is placed.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "readOnly": true,
+          "description": "Allocation state of the cluster. Possible values are: NotStarted - Indicates that the data order is created and has not been placed yet. Running - Indicates that the data order is placed and currently being processed. Succeeded - Indicates that the data order has been delivered and produced dataset is ready. Failed - Indicates that the data order has stopped and failed to successfully deliver.",
+          "enum": [
+            "NotStarted",
+            "Running",
+            "Succeeded",
+            "Failed"
+          ],
+          "x-ms-enum": {
+            "name": "Status",
+            "modelAsString": true
+          }
+        },
+        "statusDetails": {
+          "description": "Status details of the order.",
+          "type": "string",
+          "readOnly": true
+        },
+        "price": {
+          "description": "Price of the order in dollor.",
+          "type": "number",
+          "readOnly": true
+        }
+      }
+    },
+    "DataOrderResponseGeoJSONFeature": {
+      "description": "The marketplace product data of the order in GeoJSON Feature format.",
+      "type": "object",
+      "required": [
+        "type",
+        "geometry",
+        "properties"
+      ],
+      "properties":{
+        "properties": {
+          "description": "The properties of the GeoJSON Feature.",
+          "type": "object",
+          "properties":{
+            "id": {
+              "description": "The id used to identify the product data.",
+              "type": "string",
+              "readOnly": true
+            },
+            "price": {
+              "description": "Price of the product in dollor.",
+              "type": "number",
+              "readOnly": true
+            }
+          }
+        }
+      },    
+      "allOf": [
+        {
+          "$ref": "#/definitions/GeoJSONFeatureBase"
+        }
+      ]
+    },
+    "PlaceDataOrderResponse":{
+      "description": "The Place Data Order response in GeoJSON FeatureCollection format.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/DataOrderResponse"
+        }
+      ]
+    },
+    "GetDataOrderResponse" : {
+      "description": "The Get Data Order response in GeoJSON FeatureCollection format.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/DataOrderResponse"
+        }
+      ]
+    },
+    "GeoJSONGeometry": {
+      "description": "A valid `GeoJSON` geometry object. Please refer to [RFC 7946](https://tools.ietf.org/html/rfc7946#section-3.1) for details.",
+      "type": "object",
+      "required": [
+        "type",
+        "coordinates"
+      ],
+      "properties": {
+        "type": {
+          "description": "Specifies the `GeoJSON` geometry type. Only `Polygon` is supported.",
+          "type": "string",
+          "enum": [
+            "Polygon"
+          ],
+          "x-ms-enum": {
+            "name": "GeoJSONGeometryType",
+            "modelAsString": true,
+            "values": [
+              {
+                "value": "Polygon",
+                "description": "`GeoJSON Polygon` geometry."
+              }
+            ]
+          }
+        },
+        "coordinates": {
+          "description": "",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GeoJSONLinearRing"
+          }
+        }
+      }
+    },
+    "GeoJSONLinearRing": {
+      "description": "A closed LineString with four or more positions, where the first and last positions are identical. A linear ring MUST follow the right-hand rule with respect to the area it bounds, i.e., exterior rings are counterclockwise, and holes are clockwise.",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/GeoJSONPosition"
+      }
+    },
+    "GeoJSONPosition": {
+      "description": "A position is an array of numbers representing longitude and latitude (in that order)",
+      "type": "array",
+      "items": {
+        "description": "Longitude or Latitude values. Longitude must be between -180 and 180. Latitude must be between -90 and 90.",
+        "type": "number",
+        "format": "double"
+      }
+    },
+    "ListDataOrdersResponse": {
+      "description": "List Data Orders response.",
+      "type": "object",
+      "required": [
+        "totalResults",
+        "links"
+      ],
+      "properties": {
+        "totalResults": {
+          "description": "The total number of the order items under the catalog for the client.",
+          "type": "string",
+          "readOnly": true
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/OrderItemLink"
+          }
+        }
+      }
+    },
+    "OrderItemLink": {
+      "description": "Links to the order information.",
+      "type": "object",
+      "required": [
+        "id",
+        "href"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The id used to identify the order."
+        },
+        "href": {
+          "type": "string",
+          "description": "The url used to get order detail information."
+        }
+      }
+    }
+  }
+}

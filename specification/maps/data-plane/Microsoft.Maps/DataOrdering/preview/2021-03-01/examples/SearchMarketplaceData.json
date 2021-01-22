@@ -1,0 +1,128 @@
+{
+  "parameters": {
+    "api-version": "2021-03-01-preview.0",
+    "subscription-key": "[subscription-key]",
+    "catalogId": "imagery",
+    "itemsPerPage" : 1,
+    "page": 3,
+    "cloudCover": "[0,20]",
+    "snowCover": "[0,30]",
+    "incidenceAngle": "[0,90]",
+    "acquisitionDate": "[2018-04-20T00:00:00.000Z,2018-06-04T00:00:00.000Z]",
+    "bbox": "-122.537,46.595,-121.303,48.807",
+    "sortBy": "incidenceAngle"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "geometry": {
+              "coordinates": [
+                [
+                  [
+                      -122.2787330626079,
+                      47.95267095266939
+                  ],
+                  [
+                      -122.2796965774825,
+                      47.59784152255815
+                  ],
+                  [
+                      -121.9601324156306,
+                      47.58040923091588
+                  ],
+                  [
+                      -121.9613395002858,
+                      47.93999050080746
+                  ],
+                  [
+                      -122.2787330626079,
+                      47.95267095266939
+                  ]
+                ]
+              ],
+              "type": "Polygon"
+            },
+            "properties": {
+              "acquisitionDate": "2018-05-05T19:31:47.055Z",
+              "cloudCover": 14.66,
+              "expirationDate": "2022-05-06T21:42:18.917791246Z",
+              "format": "image/jp2",
+              "productType": "bundle",
+              "id": "2f0c1468-fe8c-475d-9009-233b6d05ff2f",
+              "incidenceAngle": 25.35583738275197,
+              "snowCover": 0,
+              "resolution": 0.5,
+              "lastUpdateDate": "2020-05-06T21:42:18.917782411Z"
+            },
+            "type": "Feature"
+          }
+        ],
+        "totalResults": 184,
+        "page": 3,
+        "itemsPerPage": 1,
+        "links": [
+            {
+              "href": "https://atlas.microsoft.com/data-ordering/catalogs/imagery/?subscription-key={subscription-key}&api-version=2021-03-01-preview.0&itemsPerPage=1&page=3&cloudCover=[0,20]&snowCover=[0,30]&incidenceAngle=[0,90]&acquisitionDate=[2018-04-20T00:00:00.000Z,2018-06-04T00:00:00.000Z]&bbox=-122.537,37.595,-122.303,37.807&sortBy=acquisitionDate",
+              "rel": "self"
+            },
+            {
+              "href": "https://atlas.microsoft.com/data-ordering/catalogs/imagery/?subscription-key={subscription-key}&api-version=2021-03-01-preview.0&itemsPerPage=1&page=2&cloudCover=[0,20]&snowCover=[0,30]&incidenceAngle=[0,90]&acquisitionDate=[2018-04-20T00:00:00.000Z,2018-06-04T00:00:00.000Z]&bbox=-122.537,37.595,-122.303,37.807&sortBy=acquisitionDate",
+              "rel": "prev"
+            },
+            {
+              "href": "https://atlas.microsoft.com/data-ordering/catalogs/imagery/?subscription-key={subscription-key}&api-version=2021-03-01-preview.0&itemsPerPage=1&page=4&cloudCover=[0,20]&snowCover=[0,30]&incidenceAngle=[0,90]&acquisitionDate=[2018-04-20T00:00:00.000Z,2018-06-04T00:00:00.000Z]&bbox=-122.537,37.595,-122.303,37.807&sortBy=acquisitionDate",
+              "rel": "next"
+            }
+          ]
+      }
+    },
+    "400": {
+      "headers": {},
+      "body": {
+        "error": {
+          "code": "400 BadRequest",
+          "message": "Bad request: one or more parameters were incorrectly specified or are mutually exclusive."
+        }
+      }
+    },
+    "401": {
+      "headers": {},
+      "body": {
+        "error": {
+          "code": "401 Unauthorized",
+          "message": "Access denied due to invalid subscription key. Make sure to provide a valid key for an active subscription."
+        }
+      }
+    },
+    "403": {
+      "headers": {},
+      "body": {
+        "error": {
+          "code": "403 Forbidden",
+          "message": "Permission, capacity, or authentication issues."
+        }
+      }
+    },
+    "404": {
+      "headers": {},
+      "body": {
+        "error": {
+          "code": "404 NotFound",
+          "message": "Not Found: the requested resource could not be found, but it may be available again in the future."
+        }
+      }
+    },
+    "500": {
+      "headers": {},
+      "body": {
+        "error": {
+          "code": "500 InternalServerError",
+          "message": "An error occurred while processing the request. Please try again later."
+        }
+      }
+    }
+  }
+}
