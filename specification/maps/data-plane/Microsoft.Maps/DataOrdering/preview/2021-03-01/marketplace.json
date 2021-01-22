@@ -179,7 +179,6 @@
             "in": "query",
             "description": "The cloud cover percentage or the cloud cover percentage range. The value should between 0 to 100. Ranges are expressed as follow: Comma to separate start value from end value, Start value or end value can be omitted (it means values are infinite), Start with [ means start value is included, Start with ] means start value is excluded, End with [ means end value is included, End with ] means end value is excluded.",
             "type": "string",
-            "example": "[0,100]",
             "required": false
           },
           {
@@ -187,7 +186,6 @@
             "in": "query",
             "description": "The snow cover percentage or the snow cover percentage range. The value should between 0 to 100. Ranges are expressed as follow: Comma to separate start value from end value, Start value or end value can be omitted (it means values are infinite), Start with [ means start value is included, Start with ] means start value is excluded, End with [ means end value is included, End with ] means end value is excluded.",
             "type": "string",
-            "example": "[0,100]",
             "required": false
           },
           {
@@ -195,7 +193,6 @@
             "in": "query",
             "description": "The incident angle or the incident angle range in degree. The value should between 0 to 90. Ranges are expressed as follow: Comma to separate start value from end value, Start value or end value can be omitted (it means values are infinite), Start with [ means start value is included, Start with ] means start value is excluded, End with [ means end value is included, End with ] means end value is excluded.",
             "type": "string",
-            "example": "[0,90]",
             "required": false
           },
           {
@@ -204,7 +201,6 @@
             "description": "The acquisition date or the acquisition date range. Ranges are expressed as follow: Comma to separate start value from end value, Start value or end value can be omitted (it means values are infinite), Start with [ means start value is included, Start with ] means start value is excluded, End with [ means end value is included, End with ] means end value is excluded.",
             "type": "string",
             "format": "date-time",
-            "example": "2018-02-28T11:00:29.027Z",
             "required": false
           },
           {
@@ -548,7 +544,7 @@
         },
         "totalResults": {
           "description": "The total number of the data items of the search.",
-          "type": "string",
+          "type": "integer",
           "readOnly": true
         },
         "page": {
@@ -697,8 +693,7 @@
           "properties":{
             "id": {
               "description": "The id used to identify the product data.",
-              "type": "string",
-              "readOnly": true
+              "type": "string"
             }
           }
         }
@@ -893,7 +888,7 @@
       "properties": {
         "totalResults": {
           "description": "The total number of the order items under the catalog for the client.",
-          "type": "string",
+          "type": "integer",
           "readOnly": true
         },
         "links": {

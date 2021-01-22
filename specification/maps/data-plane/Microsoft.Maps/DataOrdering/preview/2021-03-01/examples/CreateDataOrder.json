@@ -94,52 +94,50 @@
     },
     "201": {
       "body": {
-        "body": {
-          "type": "FeatureCollection",
-          "features": [
-            {
-              "geometry": {
-                "coordinates": [
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "geometry": {
+              "coordinates": [
+                [
                   [
-                    [
-                      -122.2787330626079,
-                      47.95267095266939
-                    ],
-                    [
-                      -122.2796965774825,
-                      47.59784152255815
-                    ],
-                    [
-                      -121.9601324156306,
-                      47.58040923091588
-                    ],
-                    [
-                      -121.9613395002858,
-                      47.93999050080746
-                    ],
-                    [
-                      -122.2787330626079,
-                      47.95267095266939
-                    ]
+                    -122.2787330626079,
+                    47.95267095266939
+                  ],
+                  [
+                    -122.2796965774825,
+                    47.59784152255815
+                  ],
+                  [
+                    -121.9601324156306,
+                    47.58040923091588
+                  ],
+                  [
+                    -121.9613395002858,
+                    47.93999050080746
+                  ],
+                  [
+                    -122.2787330626079,
+                    47.95267095266939
                   ]
-                ],
-                "type": "Polygon"
-              },
-              "properties": {
-                "id": "2f0c1468-fe8c-475d-9009-233b6d05ff2fs",
-                "price": 30
-              },
-              "type": "Feature"
-            }
-          ],
-          "id": "order1",
-          "CreationTimestamp": "2021-01-10T21:42:18.917782411Z",
-          "LastModifiedTimestamp": "2021-01-10T21:42:18.917782411Z",
-          "ExpirationTimestamp": "2021-01-11T21:42:18.917782411Z",
-          "status": "NotStarted",
-          "statusDetails": "The order is created and not placed yet.",
-          "price": 30
-        }
+                ]
+              ],
+              "type": "Polygon"
+            },
+            "properties": {
+              "id": "2f0c1468-fe8c-475d-9009-233b6d05ff2fs",
+              "price": 30
+            },
+            "type": "Feature"
+          }
+        ],
+        "id": "order1",
+        "CreationTimestamp": "2021-01-10T21:42:18.917782411Z",
+        "LastModifiedTimestamp": "2021-01-10T21:42:18.917782411Z",
+        "ExpirationTimestamp": "2021-01-11T21:42:18.917782411Z",
+        "status": "NotStarted",
+        "statusDetails": "The order is created and not placed yet.",
+        "price": 30
       }
     },
     "400": {

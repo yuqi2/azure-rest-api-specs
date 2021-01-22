@@ -3,7 +3,7 @@
     "api-version": "2021-03-01-preview.0",
     "subscription-key": "[subscription-key]",
     "catalogId": "imagery",
-    "itemsPerPage" : 1,
+    "itemsPerPage": 1,
     "page": 3,
     "cloudCover": "[0,20]",
     "snowCover": "[0,30]",
@@ -22,24 +22,24 @@
               "coordinates": [
                 [
                   [
-                      -122.2787330626079,
-                      47.95267095266939
+                    -122.2787330626079,
+                    47.95267095266939
                   ],
                   [
-                      -122.2796965774825,
-                      47.59784152255815
+                    -122.2796965774825,
+                    47.59784152255815
                   ],
                   [
-                      -121.9601324156306,
-                      47.58040923091588
+                    -121.9601324156306,
+                    47.58040923091588
                   ],
                   [
-                      -121.9613395002858,
-                      47.93999050080746
+                    -121.9613395002858,
+                    47.93999050080746
                   ],
                   [
-                      -122.2787330626079,
-                      47.95267095266939
+                    -122.2787330626079,
+                    47.95267095266939
                   ]
                 ]
               ],
@@ -64,19 +64,19 @@
         "page": 3,
         "itemsPerPage": 1,
         "links": [
-            {
-              "href": "https://atlas.microsoft.com/data-ordering/catalogs/imagery/?subscription-key={subscription-key}&api-version=2021-03-01-preview.0&itemsPerPage=1&page=3&cloudCover=[0,20]&snowCover=[0,30]&incidenceAngle=[0,90]&acquisitionDate=[2018-04-20T00:00:00.000Z,2018-06-04T00:00:00.000Z]&bbox=-122.537,37.595,-122.303,37.807&sortBy=acquisitionDate",
-              "rel": "self"
-            },
-            {
-              "href": "https://atlas.microsoft.com/data-ordering/catalogs/imagery/?subscription-key={subscription-key}&api-version=2021-03-01-preview.0&itemsPerPage=1&page=2&cloudCover=[0,20]&snowCover=[0,30]&incidenceAngle=[0,90]&acquisitionDate=[2018-04-20T00:00:00.000Z,2018-06-04T00:00:00.000Z]&bbox=-122.537,37.595,-122.303,37.807&sortBy=acquisitionDate",
-              "rel": "prev"
-            },
-            {
-              "href": "https://atlas.microsoft.com/data-ordering/catalogs/imagery/?subscription-key={subscription-key}&api-version=2021-03-01-preview.0&itemsPerPage=1&page=4&cloudCover=[0,20]&snowCover=[0,30]&incidenceAngle=[0,90]&acquisitionDate=[2018-04-20T00:00:00.000Z,2018-06-04T00:00:00.000Z]&bbox=-122.537,37.595,-122.303,37.807&sortBy=acquisitionDate",
-              "rel": "next"
-            }
-          ]
+          {
+            "href": "https://atlas.microsoft.com/data-ordering/catalogs/imagery/?subscription-key={subscription-key}&api-version=2021-03-01-preview.0&itemsPerPage=1&page=3&cloudCover=[0,20]&snowCover=[0,30]&incidenceAngle=[0,90]&acquisitionDate=[2018-04-20T00:00:00.000Z,2018-06-04T00:00:00.000Z]&bbox=-122.537,37.595,-122.303,37.807&sortBy=acquisitionDate",
+            "rel": "self"
+          },
+          {
+            "href": "https://atlas.microsoft.com/data-ordering/catalogs/imagery/?subscription-key={subscription-key}&api-version=2021-03-01-preview.0&itemsPerPage=1&page=2&cloudCover=[0,20]&snowCover=[0,30]&incidenceAngle=[0,90]&acquisitionDate=[2018-04-20T00:00:00.000Z,2018-06-04T00:00:00.000Z]&bbox=-122.537,37.595,-122.303,37.807&sortBy=acquisitionDate",
+            "rel": "prev"
+          },
+          {
+            "href": "https://atlas.microsoft.com/data-ordering/catalogs/imagery/?subscription-key={subscription-key}&api-version=2021-03-01-preview.0&itemsPerPage=1&page=4&cloudCover=[0,20]&snowCover=[0,30]&incidenceAngle=[0,90]&acquisitionDate=[2018-04-20T00:00:00.000Z,2018-06-04T00:00:00.000Z]&bbox=-122.537,37.595,-122.303,37.807&sortBy=acquisitionDate",
+            "rel": "next"
+          }
+        ]
       }
     },
     "400": {
