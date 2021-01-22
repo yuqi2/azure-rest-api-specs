@@ -218,11 +218,7 @@
             "name": "sortBy",
             "in": "query",
             "description": "The order strategy for the items. Accepted values are all search filter names separated by a comma. Minus sign can be used to sort descending on the attribute. Otherwise the sort is ascending.",
-            "type": "array",
-            "collectionFormat": "csv",
-            "items": {
-              "type": "string"
-            },
+            "type": "string",
             "default": "-acquisitionDate,cloudCover",
             "required": false
           }
